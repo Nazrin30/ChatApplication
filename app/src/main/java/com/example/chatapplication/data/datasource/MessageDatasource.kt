@@ -14,7 +14,7 @@ class MessageDatasource(var referenceUser: DatabaseReference) {
     private val chatFriends = MutableLiveData<List<User>>()
     private val referenceMessages = FirebaseDatabase.getInstance().getReference("/messages")
     private val currentUser = Firebase.auth.currentUser
-    var latestMessages = mutableListOf<Message>()
+    var latestMessages = MutableLiveData<List<Message>>()
 
     fun sent(
         fromID: String,
@@ -87,7 +87,7 @@ class MessageDatasource(var referenceUser: DatabaseReference) {
 
     }
 
-    fun loadLatestMessage() : List<Message>{
+    fun loadLatestMessage() : MutableLiveData<List<Message>>{
         val hashMap = HashMap<String, Message>()
         var list = mutableListOf<Message>()
         val fromID = FirebaseAuth.getInstance().uid
@@ -98,7 +98,6 @@ class MessageDatasource(var referenceUser: DatabaseReference) {
               hashMap[snapshot.key.toString()] = chatMessage
                 for ((key, value) in hashMap){
                     list.add(value)
-
 
                 }
 
@@ -124,9 +123,32 @@ class MessageDatasource(var referenceUser: DatabaseReference) {
         })
 
 
-       latestMessages = list
+      // latestMessages.value = list
 
        return latestMessages
     }
+
+    fun loadLatestMessage2() : MutableLiveData<List<Message>>{
+
+        val fromID = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromID")
+        ref.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = ArrayList<Message>()
+                for (child in snapshot.children) {
+                    val message = child.getValue(Message::class.java)
+                    if (message != null) {
+                        list.add(message)
+                    }
+                    }
+                latestMessages.value = list
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+        return latestMessages
+    }
+
 }
 

@@ -17,6 +17,6 @@ class HomeViewModel @Inject constructor(val userRepository: UserRepository) : Vi
        Log.e("testInit",friendsChatList.value.toString() )
       }
     fun loadLatestMessages (){
-      friendsChatList.value = userRepository.loadLatestMessages()
+      friendsChatList = userRepository.loadLatestMessages()
     }
 }

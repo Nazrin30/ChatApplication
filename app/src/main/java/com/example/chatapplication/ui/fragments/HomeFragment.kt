@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chatapplication.R
+import com.example.chatapplication.data.entity.Message
 import com.example.chatapplication.data.entity.User
 import com.example.chatapplication.databinding.FragmentHomeBinding
 
@@ -27,7 +28,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var auth : FirebaseAuth
     private lateinit var dbRef : DatabaseReference
-    private val viewModel : HomeViewModel by viewModels()
+    private lateinit var  viewModel : HomeViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,13 +40,14 @@ class HomeFragment : Fragment() {
         verifyUserCheckedIn()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding.recyclerView.setHasFixedSize(false)
+
         try{viewModel.friendsChatList.observe(viewLifecycleOwner){
+
             Log.e("testIt", it.toString())
             val adapter = FriendsAdapter( requireContext(), it)
             binding.recyclerView.adapter = adapter
         }}catch (e:java.lang.Exception){
-
+            Log.e("exception", e.toString())
         }
 
 
@@ -63,14 +65,11 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadLatestMessages()
-        viewModel.friendsChatList.observe(viewLifecycleOwner) {
 
-            val adapter = FriendsAdapter(requireContext(), it)
-            binding.recyclerView.adapter = adapter
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val tempViewModel : HomeViewModel by viewModels()
+        viewModel = tempViewModel
     }
 
 private fun verifyUserCheckedIn(){
@@ -79,5 +78,7 @@ private fun verifyUserCheckedIn(){
       Navigation.findNavController(requireView()).navigate(HomeFragmentDirections.actionHomeFragmentToLoginFragment())
     }
 }
+
+
 
 }

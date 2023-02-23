@@ -15,5 +15,5 @@ class UserRepository (var userDatasource: UserDatasource, var messageDatasource:
     fun loadChat(fromID: String, toId: String) : MutableLiveData<List<Message>> = messageDatasource.loadChat(fromID, toId)
     fun deleteMessage(uid : String) = messageDatasource.deleteMessage(uid)
     fun deleteChat(fromID: String, toId: String) = messageDatasource.deleteChat(fromID, toId)
-    fun loadLatestMessages() : List<Message> = messageDatasource.loadLatestMessage()
+    fun loadLatestMessages() : MutableLiveData<List<Message>> = messageDatasource.loadLatestMessage2()
 }
