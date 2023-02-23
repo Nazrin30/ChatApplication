@@ -40,10 +40,10 @@ class ChatFragment : Fragment() {
         viewModel.user.observe(viewLifecycleOwner){
             viewModel.loadChat(Firebase.auth.currentUser?.uid.toString(), it.uid.toString())
         }
-        Log.e("Test chat4", viewModel.user?.value?.name.toString())
+
 
         viewModel.chat.observe(viewLifecycleOwner){
-            Log.e("Test chat3", it.toString())
+
             val adapter = ChatAdapter(requireContext(), it)
             binding.adapter = adapter
             binding.recyclerViewMessages.layoutManager = LinearLayoutManager(context)

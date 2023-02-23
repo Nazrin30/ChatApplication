@@ -98,7 +98,7 @@ class MessageDatasource(var referenceUser: DatabaseReference) {
               hashMap[snapshot.key.toString()] = chatMessage
                 for ((key, value) in hashMap){
                     list.add(value)
-                    Log.e("test", value.toString())
+
 
                 }
 
@@ -109,9 +109,8 @@ class MessageDatasource(var referenceUser: DatabaseReference) {
                 val chatMessage = snapshot.getValue(Message ::class.java) ?: return
                 hashMap[snapshot.key.toString()] = chatMessage
                 for ((key, value) in hashMap){
-                    Log.e("test ", "$key = $value")
+
                     list.add(value)
-                    Log.e("test", value.toString())
 
                 }
 
@@ -126,7 +125,7 @@ class MessageDatasource(var referenceUser: DatabaseReference) {
 
 
        latestMessages = list
-       Log.e("testLatestMessages", latestMessages.toString())
+
        return latestMessages
     }
 }

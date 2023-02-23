@@ -51,9 +51,9 @@ class HomeFragment : Fragment() {
 
         binding.btnSignOut.setOnClickListener {
             Firebase.auth.signOut()
-            Log.e("Test chat", "working before navigate")
+
             Navigation.findNavController(it).navigate(HomeFragmentDirections.actionHomeFragmentToLoginFragment())
-            Log.e("Test chat", "working after navigate")
+
         }
         binding.btnNewMessage.setOnClickListener {
             Navigation.findNavController(it).navigate(HomeFragmentDirections.actionHomeFragmentToNewMessageFragment())
@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
         super.onResume()
         viewModel.loadLatestMessages()
         viewModel.friendsChatList.observe(viewLifecycleOwner) {
-            Log.e("testIt", it.toString())
+
             val adapter = FriendsAdapter(requireContext(), it)
             binding.recyclerView.adapter = adapter
         }

@@ -37,9 +37,7 @@ class ChatAdapter (var mContext: Context, var messagesList : List<Message>)  :
 
     }
 
-//    override fun onBindViewHolder(holder: SentMessagesDesignHolder, position: Int) {
-//        val message = messagesList.get(position)
-//    }
+
 
     override fun getItemCount(): Int {
        return messagesList.size
