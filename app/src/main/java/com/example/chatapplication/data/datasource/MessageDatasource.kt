@@ -123,7 +123,7 @@ class MessageDatasource(var referenceUser: DatabaseReference) {
         })
 
 
-      // latestMessages.value = list
+
 
        return latestMessages
     }
