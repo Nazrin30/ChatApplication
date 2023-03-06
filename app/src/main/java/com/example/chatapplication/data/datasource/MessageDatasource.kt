@@ -87,46 +87,7 @@ class MessageDatasource(var referenceUser: DatabaseReference) {
 
     }
 
-    fun loadLatestMessage() : MutableLiveData<List<Message>>{
-        val hashMap = HashMap<String, Message>()
-        var list = mutableListOf<Message>()
-        val fromID = FirebaseAuth.getInstance().uid
-        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromID")
-        ref.addChildEventListener(object : ChildEventListener{
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-              val chatMessage = snapshot.getValue(Message ::class.java) ?: return
-              hashMap[snapshot.key.toString()] = chatMessage
-                for ((key, value) in hashMap){
-                    list.add(value)
 
-                }
-
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-
-                val chatMessage = snapshot.getValue(Message ::class.java) ?: return
-                hashMap[snapshot.key.toString()] = chatMessage
-                for ((key, value) in hashMap){
-
-                    list.add(value)
-
-                }
-
-            }
-
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-            override fun onCancelled(error: DatabaseError) {}
-
-        })
-
-
-
-
-       return latestMessages
-    }
 
     fun loadLatestMessage2() : MutableLiveData<List<Message>>{
 

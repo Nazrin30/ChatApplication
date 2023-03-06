@@ -32,7 +32,7 @@ class NewMessagesAdapter (var mContext: Context, var chatsList : List<User>, val
     @SuppressLint("ResourceType")
     override fun onBindViewHolder(holder: NewMessagesCardDesignHolder, position: Int) {
        val newChat = chatsList.get(position)
-        Log.e("new messages", newChat.toString())
+
        holder.binding.newChat = newChat
        var url = newChat.profilePhoto
        Glide.with(mContext).load(url).into(holder.binding.userProfilePhoto)
@@ -40,7 +40,7 @@ class NewMessagesAdapter (var mContext: Context, var chatsList : List<User>, val
            viewModel.user.value = newChat
            Navigation.findNavController(it).navigate(NewMessageFragmentDirections.actionNewMessageFragmentToChatFragment(newChat))
 
-           Log.e("Test chat6", viewModel.user.value.toString())
+
        }
     }
 
